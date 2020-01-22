@@ -21,10 +21,14 @@
 // 0: low speed, 1: high speed
 #define BRGH_BIT 1
 
-#if BRGH_BIT
+#if SYNC_BIT == 0 && BRGH_BIT == 0
 #define SPBRG_DATA ((_XTAL_FREQ / BAUDRATE) / 64) - 1
-#else
+#elif SYNC_BIT == 0 && BRGH_BIT == 1
+#define SPBRG_DATA ((_XTAL_FREQ / BAUDRATE) / 16) - 1
+#elif SYNC_BIT == 1 && BRGH_BIT == 0
 #define SPBRG_DATA ((_XTAL_FREQ / BAUDRATE) / 4) - 1
+#else
+#define SPBRG_DATA 0
 #endif
 
 extern void uart_init(void);
